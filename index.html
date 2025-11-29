@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Quest - Educational Security Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Audio element for Windows 7 startup sound -->
+    <audio id="startupSound" preload="auto">
+        <source src="Microsoft Windows 7 Startup Sound.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Windows 95 Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-window">
+            <div class="login-header">
+                <div class="login-title">Welcome to Windows</div>
+            </div>
+            <div class="login-content">
+                <div class="login-icon">👤</div>
+                <div class="login-username">User</div>
+                <div class="login-password-container">
+                    <label class="login-label">Password:</label>
+                    <input type="text" class="login-password" value="••••••••" readonly>
+                </div>
+                <button class="login-button" onclick="startGame()">Take the Online Privacy Quiz!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="desktop" id="desktop" style="display: none;">
+        <!-- Desktop Background -->
+        <div class="desktop-background"></div>
+        
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">📁</div>
+                <div class="desktop-icon-label">My Documents</div>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">💿</div>
+                <div class="desktop-icon-label">My Computer</div>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">🌐</div>
+                <div class="desktop-icon-label">Internet Explorer</div>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">🗑️</div>
+                <div class="desktop-icon-label">Recycle Bin</div>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">📝</div>
+                <div class="desktop-icon-label">Notepad</div>
+            </div>
+            <div class="desktop-icon">
+                <div class="desktop-icon-icon">🎮</div>
+                <div class="desktop-icon-label">Games</div>
+            </div>
+        </div>
+        
+        <!-- Main Game Window -->
+        <div class="window active" id="gameWindow">
+            <div class="window-header">
+                <div class="window-title">
+                    <span class="window-icon">🔒</span>
+                    Privacy Quest
+                </div>
+                <div class="window-controls">
+                    <button class="control-btn minimize">−</button>
+                    <button class="control-btn maximize">□</button>
+                    <button class="control-btn close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <!-- Score Display -->
+                <div class="score-panel">
+                    <div class="score-item">
+                        <span class="score-label">Score:</span>
+                        <span class="score-value" id="score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Scenario:</span>
+                        <span class="score-value" id="scenarioNum">1 / 8</span>
+                    </div>
+                </div>
+
+                <!-- TXTY Avatar -->
+                <div class="txt-container">
+                    <div class="txt-avatar" id="txtAvatar">
+                        <div class="txt-face">
+                            <div class="txt-eye left"></div>
+                            <div class="txt-eye right"></div>
+                            <div class="txt-mouth"></div>
+                        </div>
+                    </div>
+                    <div class="txt-speech" id="txtSpeech">
+                        <p>Welcome to Privacy Quest! I'm TXTY, your helpful guide. Let's start with your first challenge...</p>
+                    </div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div class="scenario-container" id="scenarioContainer">
+                    <div class="scenario-title" id="scenarioTitle">Step 1 – Library Wi-Fi</div>
+                    <div class="scenario-description" id="scenarioDescription">
+                        You're sitting in the campus library. Two Wi-Fi networks appear on your screen...
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be dynamically generated -->
+                </div>
+
+                <!-- Feedback Area -->
+                <div class="feedback-area" id="feedbackArea"></div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Window -->
+        <div class="notification" id="notification">
+            <div class="notification-content"></div>
+        </div>
+
+        <!-- Email Notification Popup -->
+        <div class="email-notification" id="emailNotification">
+            <div class="email-notification-header">
+                <span>📧 New Email</span>
+                <button class="email-notification-close" onclick="closeEmailNotification()">×</button>
+            </div>
+            <div class="email-notification-content">
+                <div class="email-notification-title" id="emailNotificationTitle"></div>
+                <div class="email-notification-preview" id="emailNotificationPreview"></div>
+                <button class="dialog-btn" onclick="openEmailFromNotification()" style="margin-top: 8px; width: 100%;">Open Email</button>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-start">
+                <button class="start-btn">Start</button>
+            </div>
+            <div class="taskbar-apps">
+                <button class="taskbar-app active" id="gameApp">
+                    <span class="app-icon">🔒</span>
+                    <span class="app-name">Privacy Quest</span>
+                </button>
+            </div>
+            <div class="taskbar-tray">
+                <!-- Wi-Fi Icon (for scenario 1) -->
+                <div class="tray-icon wifi-icon" id="wifiIcon" style="display: none;">
+                    <span class="icon-symbol">📶</span>
+                    <div class="wifi-menu" id="wifiMenu">
+                        <div class="wifi-menu-header">Available Networks</div>
+                        <div class="wifi-network-item" data-network="secure">
+                            <span class="wifi-icon-small">🔒</span>
+                            <span class="wifi-name-small">Uni_Secure_Login</span>
+                            <span class="wifi-signal">●●●</span>
+                        </div>
+                        <div class="wifi-network-item" data-network="guest">
+                            <span class="wifi-icon-small">📶</span>
+                            <span class="wifi-name-small">FreeGuest_Wifi_School_Official_For_sure</span>
+                            <span class="wifi-signal">●●</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Notification Icon (for various scenarios) -->
+                <div class="tray-icon notification-icon" id="notificationIcon" style="display: none;">
+                    <span class="icon-symbol">🔔</span>
+                    <span class="notification-badge" id="notificationBadge">1</span>
+                </div>
+                <div class="tray-time" id="trayTime">12:00 PM</div>
+            </div>
+        </div>
+
+        <!-- Popup Windows for Scenarios -->
+        <div class="popup-window" id="popupWindow" style="display: none;">
+            <div class="popup-header">
+                <div class="popup-title" id="popupTitle"></div>
+                <button class="popup-close" id="popupClose">×</button>
+            </div>
+            <div class="popup-content" id="popupContent"></div>
+        </div>
+
+        <!-- Email Window -->
+        <div class="email-window window" id="emailWindow" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <span class="window-icon">📧</span>
+                    <span id="emailWindowTitle">Email</span>
+                </div>
+                <div class="window-controls">
+                    <button class="control-btn minimize">−</button>
+                    <button class="control-btn maximize">□</button>
+                    <button class="control-btn close" onclick="closeEmailWindow()">×</button>
+                </div>
+            </div>
+            <div class="window-content" id="emailContent"></div>
+        </div>
+
+        <!-- Browser Window -->
+        <div class="browser-window window" id="browserWindow" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <span class="window-icon">🌐</span>
+                    <span id="browserWindowTitle">Browser</span>
+                </div>
+                <div class="window-controls">
+                    <button class="control-btn minimize">−</button>
+                    <button class="control-btn maximize">□</button>
+                    <button class="control-btn close" onclick="closeBrowserWindow()">×</button>
+                </div>
+            </div>
+            <div class="window-content" id="browserContent"></div>
+        </div>
+
+        <!-- Download Dialog -->
+        <div class="download-dialog" id="downloadDialog" style="display: none;">
+            <div class="dialog-content">
+                <div class="dialog-title">Download File</div>
+                <div class="dialog-message" id="downloadMessage"></div>
+                <div class="dialog-buttons">
+                    <button class="dialog-btn cancel" onclick="handleDownload('cancel')">Cancel</button>
+                    <button class="dialog-btn save" onclick="handleDownload('save')">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Permission Dialog -->
+        <div class="permission-dialog" id="permissionDialog" style="display: none;">
+            <div class="dialog-content">
+                <div class="dialog-title">App Permissions</div>
+                <div class="dialog-message" id="permissionMessage"></div>
+                <div class="permission-list" id="permissionList"></div>
+                <div class="dialog-buttons">
+                    <button class="dialog-btn deny" onclick="handlePermissions('deny')">Deny All</button>
+                    <button class="dialog-btn allow" onclick="handlePermissions('allow')">Allow All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Alert -->
+        <div class="alert-dialog" id="alertDialog" style="display: none;">
+            <div class="dialog-content">
+                <div class="dialog-title">⚠️ Security Alert</div>
+                <div class="dialog-message" id="alertMessage"></div>
+                <div class="dialog-buttons">
+                    <button class="dialog-btn" onclick="handleAlert('ignore')">This was me</button>
+                    <button class="dialog-btn" onclick="handleAlert('password')">Change Password</button>
+                    <button class="dialog-btn primary" onclick="handleAlert('2fa')">Change Password & Enable 2FA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

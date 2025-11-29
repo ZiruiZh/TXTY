@@ -1,0 +1,1638 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+body {
+    font-family: 'VT323', 'Courier New', monospace;
+    overflow: hidden;
+    height: 100vh;
+    background: #008080;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    font-smooth: never;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    text-rendering: optimizeSpeed;
+}
+
+* {
+    font-family: 'VT323', 'Courier New', monospace !important;
+    font-smooth: never !important;
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: unset !important;
+    text-rendering: optimizeSpeed !important;
+}
+
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.desktop-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 30px);
+    background-color: #008080;
+    background-image: url('bliss.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: 0;
+    min-height: 100%;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 30px);
+    z-index: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    grid-auto-rows: 80px;
+    gap: 20px;
+    align-content: start;
+}
+
+.desktop-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    padding: 4px;
+    border: 1px dotted transparent;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px dotted rgba(255, 255, 255, 0.5);
+}
+
+.desktop-icon-icon {
+    width: 48px;
+    height: 48px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.desktop-icon-label {
+    font-size: 11px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.2;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+/* Windows XP/95 Window Styles */
+.window {
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.window.active {
+    z-index: 200;
+}
+
+#gameWindow {
+    z-index: 100;
+}
+
+.window-header {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+    border-bottom: 1px solid #000;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.window-icon {
+    font-size: 14px;
+    width: 16px;
+    height: 16px;
+}
+
+.window-controls {
+    display: flex;
+    gap: 0;
+}
+
+.control-btn {
+    width: 16px;
+    height: 16px;
+    border: 1px outset #c0c0c0;
+    background: #c0c0c0;
+    color: #000;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.control-btn:active {
+    border: 1px inset #c0c0c0;
+}
+
+.control-btn.close {
+    background: #c0c0c0;
+}
+
+.window-content {
+    flex: 1;
+    background: #c0c0c0;
+    padding: 8px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 2px inset #c0c0c0;
+}
+
+/* Score Panel - Windows 95 style */
+.score-panel {
+    display: flex;
+    gap: 20px;
+    padding: 8px;
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+    border-radius: 0;
+}
+
+.score-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+}
+
+.score-label {
+    font-weight: bold;
+    color: #000;
+}
+
+.score-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000080;
+    background: #fff;
+    padding: 2px 6px;
+    border: 1px inset #c0c0c0;
+}
+
+/* TXTY Container */
+.txt-container {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #c0c0c0;
+    padding: 12px;
+    border: 2px inset #c0c0c0;
+}
+
+.txt-avatar {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    border: 2px outset #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.txt-face {
+    width: 70px;
+    height: 70px;
+    position: relative;
+}
+
+.txt-eye {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    animation: blink 4s infinite;
+}
+
+.txt-eye.left {
+    left: 15px;
+}
+
+.txt-eye.right {
+    right: 15px;
+}
+
+@keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+
+.txt-mouth {
+    width: 25px;
+    height: 12px;
+    border: 2px solid white;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.txt-speech {
+    flex: 1;
+    background: #ffffe1;
+    padding: 12px;
+    border: 2px inset #c0c0c0;
+    position: relative;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.txt-speech::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 25px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #ffffe1;
+}
+
+.txt-speech p {
+    margin: 0;
+    line-height: 1.4;
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Scenario Container */
+.scenario-container {
+    background: #c0c0c0;
+    padding: 12px;
+    border: 2px inset #c0c0c0;
+}
+
+.scenario-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000080;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #808080;
+}
+
+.scenario-description {
+    font-size: 11px;
+    color: #000;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+/* Removed scenario-visual - no longer needed */
+
+/* Options Container */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.option-btn {
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: none;
+    font-size: 11px;
+    line-height: 1.3;
+    position: relative;
+    padding-left: 40px;
+    color: #000;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.option-btn:active {
+    border: 2px inset #c0c0c0;
+}
+
+.option-btn::before {
+    content: attr(data-letter);
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.option-btn.correct {
+    background: #90ee90;
+    border-color: #00aa00;
+}
+
+.option-btn.okay {
+    background: #ffff90;
+    border-color: #aaaa00;
+}
+
+.option-btn.bad {
+    background: #ff9090;
+    border-color: #aa0000;
+}
+
+.option-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Feedback Area */
+.feedback-area {
+    min-height: 40px;
+    padding: 8px;
+    border: 2px inset #c0c0c0;
+    display: none;
+    align-items: center;
+    font-weight: bold;
+    font-size: 11px;
+    background: #c0c0c0;
+}
+
+.feedback-area.show {
+    display: flex;
+}
+
+.feedback-area.correct {
+    background: #90ee90;
+    border-color: #00aa00;
+    color: #000;
+}
+
+.feedback-area.okay {
+    background: #ffff90;
+    border-color: #aaaa00;
+    color: #000;
+}
+
+.feedback-area.bad {
+    background: #ff9090;
+    border-color: #aa0000;
+    color: #000;
+}
+
+/* Progress Bar - Windows 95 style */
+.progress-container {
+    background: #c0c0c0;
+    padding: 4px;
+    border: 2px inset #c0c0c0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 16px;
+    background: #ffffff;
+    border: 1px inset #c0c0c0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to bottom, #0080ff, #0040c0);
+    transition: width 0.5s ease;
+    width: 0%;
+    border-right: 1px solid #000080;
+}
+
+/* Notification - Windows 95 style */
+.notification {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #c0c0c0;
+    padding: 8px;
+    border: 2px outset #c0c0c0;
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    max-width: 300px;
+    font-size: 11px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-content {
+    font-size: 11px;
+    color: #000;
+}
+
+/* Taskbar - Windows 95/XP style */
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px;
+    z-index: 1000;
+    border-top: 2px outset #c0c0c0;
+}
+
+.taskbar-start {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.start-btn {
+    background: #c0c0c0;
+    color: #000;
+    border: 2px outset #c0c0c0;
+    padding: 4px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', sans-serif;
+    height: 22px;
+    display: flex;
+    align-items: center;
+}
+
+.start-btn:active {
+    border: 2px inset #c0c0c0;
+}
+
+.taskbar-apps {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+    justify-content: center;
+}
+
+.taskbar-app {
+    background: #c0c0c0;
+    color: #000;
+    border: 2px outset #c0c0c0;
+    padding: 2px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', sans-serif;
+    height: 22px;
+}
+
+.taskbar-app:active {
+    border: 2px inset #c0c0c0;
+}
+
+.taskbar-app.active {
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+}
+
+.app-icon {
+    font-size: 14px;
+}
+
+.taskbar-tray {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #000;
+    font-size: 11px;
+    height: 100%;
+    padding: 0 4px;
+    border-left: 1px inset #c0c0c0;
+}
+
+.tray-time {
+    padding: 2px 6px;
+    background: #c0c0c0;
+    border: 1px inset #c0c0c0;
+    font-size: 11px;
+}
+
+/* Interactive Elements - Wi-Fi Menu - Windows 95 style */
+.tray-icon {
+    position: relative;
+    padding: 2px 4px;
+    background: #c0c0c0;
+    border: 1px inset #c0c0c0;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+    min-width: 24px;
+}
+
+.tray-icon:active {
+    border: 1px outset #c0c0c0;
+}
+
+.tray-icon[style*="display: none"] {
+    display: none !important;
+}
+
+.icon-symbol {
+    font-size: 14px;
+}
+
+.notification-badge {
+    background: #ff0000;
+    color: white;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    border: 1px solid #000;
+}
+
+.wifi-menu {
+    position: fixed;
+    bottom: 32px;
+    right: 10px;
+    width: 300px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    display: none;
+    z-index: 10000;
+    overflow: hidden;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.wifi-menu.show {
+    display: block !important;
+}
+
+.wifi-menu-header {
+    padding: 8px;
+    background: #c0c0c0;
+    color: #000;
+    font-weight: bold;
+    border-bottom: 1px solid #808080;
+    font-size: 11px;
+}
+
+.wifi-network-item {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #000;
+    font-size: 11px;
+    border-bottom: 1px solid #808080;
+}
+
+.wifi-network-item:hover {
+    background: #000080;
+    color: white;
+}
+
+.wifi-icon-small {
+    font-size: 16px;
+}
+
+.wifi-name-small {
+    flex: 1;
+    font-size: 11px;
+}
+
+.wifi-signal {
+    color: #000080;
+    font-size: 10px;
+}
+
+.wifi-network-item:hover .wifi-signal {
+    color: white;
+}
+
+/* Popup Windows - Windows 95 style */
+.popup-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    z-index: 500;
+    overflow: hidden;
+}
+
+.popup-header {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+}
+
+.popup-title {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.popup-close {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    color: #000;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.popup-close:active {
+    border: 1px inset #c0c0c0;
+}
+
+.popup-content {
+    padding: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+    font-size: 11px;
+}
+
+/* Email Window - Windows 95 style */
+.email-window {
+    width: 700px;
+    height: 500px;
+}
+
+/* Browser Window - Windows 95 style */
+.browser-window {
+    width: 900px;
+    height: 650px;
+    z-index: 10001 !important;
+}
+
+.browser-address-bar {
+    background: #c0c0c0;
+    padding: 4px;
+    border-bottom: 1px solid #808080;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 2px inset #c0c0c0;
+}
+
+.browser-url {
+    flex: 1;
+    padding: 4px;
+    border: 2px inset #c0c0c0;
+    font-size: 11px;
+    background: white;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+/* Dialogs - Windows 95 style */
+.download-dialog,
+.permission-dialog,
+.alert-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-content {
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.dialog-title {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.dialog-message {
+    padding: 12px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #000;
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+}
+
+.dialog-buttons {
+    padding: 8px;
+    background: #c0c0c0;
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    border-top: 1px solid #808080;
+}
+
+.dialog-btn {
+    padding: 4px 12px;
+    border: 2px outset #c0c0c0;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #c0c0c0;
+    color: #000;
+    font-family: 'MS Sans Serif', sans-serif;
+    min-width: 75px;
+}
+
+.dialog-btn:active {
+    border: 2px inset #c0c0c0;
+}
+
+.dialog-btn.primary {
+    background: #c0c0c0;
+}
+
+/* Permission List */
+.permission-list {
+    padding: 0 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #c0c0c0;
+}
+
+.permission-item-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px;
+    background: #ffffff;
+    border: 1px inset #c0c0c0;
+    font-size: 11px;
+}
+
+.permission-item-dialog span {
+    font-weight: bold;
+    color: #000;
+}
+
+.permission-item-dialog .permission-icon {
+    font-size: 20px;
+}
+
+/* File Download Visual */
+.download-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #ffff90;
+    border: 2px inset #c0c0c0;
+    margin: 8px 0;
+    cursor: pointer;
+}
+
+.download-item:active {
+    border: 2px outset #c0c0c0;
+}
+
+.download-icon {
+    font-size: 40px;
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-name {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 2px;
+    font-size: 11px;
+}
+
+.download-size {
+    font-size: 10px;
+    color: #000;
+}
+
+/* Quiz Visual Interactive */
+.quiz-form {
+    padding: 12px;
+    background: #c0c0c0;
+}
+
+.quiz-question-item {
+    margin-bottom: 12px;
+}
+
+.quiz-question-item label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #000;
+    font-size: 11px;
+}
+
+.quiz-question-item input {
+    width: 100%;
+    padding: 4px;
+    border: 2px inset #c0c0c0;
+    font-size: 11px;
+    background: white;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.quiz-submit {
+    width: 100%;
+    padding: 6px;
+    background: #c0c0c0;
+    color: #000;
+    border: 2px outset #c0c0c0;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'MS Sans Serif', sans-serif;
+    margin-top: 8px;
+}
+
+.quiz-submit:active {
+    border: 2px inset #c0c0c0;
+}
+
+/* Social Media Post */
+.post-editor {
+    padding: 12px;
+    background: #c0c0c0;
+}
+
+.post-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 8px;
+    border: 2px inset #c0c0c0;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', sans-serif;
+    resize: vertical;
+    background: white;
+}
+
+.post-options {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.post-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    background: #ffffff;
+    border: 1px inset #c0c0c0;
+    font-size: 11px;
+}
+
+.post-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.post-option label {
+    cursor: pointer;
+    flex: 1;
+    color: #000;
+}
+
+.post-option select {
+    border: 2px inset #c0c0c0;
+    background: white;
+    padding: 2px;
+    font-size: 11px;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.post-button {
+    margin-top: 8px;
+    width: 100%;
+    padding: 6px;
+    background: #c0c0c0;
+    color: #000;
+    border: 2px outset #c0c0c0;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.post-button:active {
+    border: 2px inset #c0c0c0;
+}
+
+/* LinkedIn Message */
+.linkedin-message {
+    background: #e3f2fd;
+    border: 2px inset #c0c0c0;
+    padding: 12px;
+    margin: 12px;
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    background: #0054e3;
+    border: 2px outset #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.message-sender {
+    font-weight: bold;
+    color: #000080;
+    font-size: 11px;
+}
+
+.message-content {
+    background: white;
+    padding: 8px;
+    border: 1px inset #c0c0c0;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    font-size: 11px;
+}
+
+.message-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.message-btn {
+    padding: 4px 12px;
+    border: 2px outset #c0c0c0;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #c0c0c0;
+    color: #000;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.message-btn:active {
+    border: 2px inset #c0c0c0;
+}
+
+.message-btn.primary {
+    background: #c0c0c0;
+}
+
+/* Email Visual - Windows 95 style */
+.email-visual {
+    background: white;
+    border: 2px inset #c0c0c0;
+    padding: 12px;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 11px;
+}
+
+.email-header {
+    border-bottom: 1px solid #808080;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.email-from {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 4px;
+    font-size: 11px;
+}
+
+.email-subject {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000080;
+    margin-bottom: 6px;
+}
+
+.email-body {
+    line-height: 1.4;
+    color: #000;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.email-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 12px;
+    background: #c0c0c0;
+    color: #000080;
+    text-decoration: underline;
+    border: 2px outset #c0c0c0;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.email-link:active {
+    border: 2px inset #c0c0c0;
+}
+
+/* Results Screen */
+.results-screen {
+    text-align: center;
+    padding: 20px;
+    background: #c0c0c0;
+}
+
+.results-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000080;
+    margin-bottom: 12px;
+}
+
+.final-score {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000080;
+    margin: 12px 0;
+    background: white;
+    padding: 8px;
+    border: 2px inset #c0c0c0;
+    display: inline-block;
+}
+
+.score-breakdown {
+    background: white;
+    padding: 12px;
+    border: 2px inset #c0c0c0;
+    margin: 12px 0;
+    text-align: left;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #808080;
+    font-size: 11px;
+}
+
+.restart-btn {
+    margin-top: 20px;
+    padding: 8px 24px;
+    background: #c0c0c0;
+    color: #000;
+    border: 2px outset #c0c0c0;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+.restart-btn:active {
+    border: 2px inset #c0c0c0;
+}
+
+/* Security To-Do List */
+.security-todo-section {
+    margin: 20px 0;
+    background: #c0c0c0;
+}
+
+.todo-category {
+    background: white;
+    padding: 12px;
+    border: 2px inset #c0c0c0;
+    margin-bottom: 12px;
+}
+
+.todo-category-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: #000080;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #808080;
+}
+
+.todo-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.todo-item {
+    font-size: 11px;
+    color: #000;
+    line-height: 1.5;
+    padding: 4px 0;
+    text-align: left;
+    font-family: 'MS Sans Serif', sans-serif;
+}
+
+/* Archetype Section */
+.archetype-section {
+    margin: 20px 0;
+    background: #c0c0c0;
+}
+
+.archetype-card {
+    background: white;
+    padding: 16px;
+    border: 2px inset #c0c0c0;
+    margin: 12px 0;
+    text-align: center;
+}
+
+.archetype-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000080;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.archetype-sprite {
+    margin: 12px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.archetype-sprite img {
+    max-width: 120px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.archetype-percentage {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 12px;
+    background: #c0c0c0;
+    padding: 4px 8px;
+    border: 1px inset #c0c0c0;
+    display: inline-block;
+}
+
+.archetype-tone {
+    font-size: 11px;
+    color: #000;
+    margin-bottom: 12px;
+    font-style: italic;
+    padding: 8px;
+    background: #ffffe1;
+    border: 1px inset #c0c0c0;
+}
+
+.archetype-example {
+    padding: 8px;
+    background: #e3f2fd;
+    border: 1px inset #c0c0c0;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.archetype-habits {
+    text-align: left;
+    padding: 8px;
+    background: #f0f0f0;
+    border: 1px inset #c0c0c0;
+}
+
+.archetype-habits ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.archetype-habits li {
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: #000;
+    line-height: 1.4;
+}
+
+/* Windows 95 Login Screen */
+.login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #008080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+.login-window {
+    width: 400px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.login-header {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+}
+
+.login-title {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.login-content {
+    padding: 30px;
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+    text-align: center;
+}
+
+.login-icon {
+    font-size: 64px;
+    margin-bottom: 15px;
+}
+
+.login-username {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.login-password-container {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.login-label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.login-password {
+    width: 100%;
+    padding: 6px;
+    border: 2px inset #c0c0c0;
+    background: white;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    color: #000;
+    letter-spacing: 3px;
+    text-align: center;
+    cursor: default;
+}
+
+.login-password:focus {
+    outline: none;
+    border: 2px inset #c0c0c0;
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px 20px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'VT323', 'Courier New', monospace;
+    transition: none;
+}
+
+.login-button:hover {
+    background: #d4d0c8;
+}
+
+.login-button:active {
+    border: 2px inset #c0c0c0;
+    background: #a0a0a0;
+}
+
+/* Email Notification Popup - Windows 95 style */
+.email-notification {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    width: 300px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    z-index: 10000;
+    display: none;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.email-notification.show {
+    display: block !important;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.email-notification-header {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+}
+
+.email-notification-content {
+    padding: 12px;
+    background: #c0c0c0;
+    border: 2px inset #c0c0c0;
+    font-size: 11px;
+}
+
+.email-notification-title {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.email-notification-preview {
+    color: #000;
+    font-size: 10px;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.email-notification-close {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    color: #000;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.email-notification-close:active {
+    border: 1px inset #c0c0c0;
+}
+
+/* Fake Pop-up Notifications - Windows 95 Style */
+.fake-popup-notification {
+    position: absolute;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    width: 360px;
+    z-index: 50000;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    animation: popupAppear 0.2s ease-out;
+    pointer-events: none;
+    user-select: none;
+    font-family: 'MS Sans Serif', sans-serif;
+    overflow: hidden;
+}
+
+.fake-popup-header {
+    background: linear-gradient(to bottom, #0054e3, #0042c4);
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+    border-bottom: 1px solid #000;
+}
+
+.fake-popup-title {
+    font-weight: bold;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.fake-popup-close {
+    width: 16px;
+    height: 16px;
+    border: 1px outset #c0c0c0;
+    background: #c0c0c0;
+    color: #000;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+    pointer-events: none;
+}
+
+.fake-popup-content {
+    background: #c0c0c0;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 2px inset #c0c0c0;
+    min-height: 140px;
+}
+
+.fake-popup-icon {
+    width: 16px;
+    height: 16px;
+    background-size: 128px 128px; /* Actual sprite sheet size: 8 columns x 8 rows of 16x16 emojis */
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.fake-popup-message {
+    flex: 1;
+    font-size: 11px;
+    color: #000;
+    line-height: 1.4;
+    font-weight: normal;
+}
+
+@keyframes popupAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes popupDisappear {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+}
